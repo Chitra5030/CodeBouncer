@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { sendContactEmail, contactEmailConfigured } from "../lib/email";
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -17,7 +18,18 @@ export default function Contact() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Something went wrong.");
-      setStatus({ state: "success", message: data.message });
+
+      // Deliver the message by email too (no-op if EmailJS isn't configured yet).
+      let message = data.message;
+      if (contactEmailConfigured()) {
+        try {
+          await sendContactEmail(form);
+        } catch {
+          message = "Message saved! (We couldn't email it just now, but we got it.)";
+        }
+      }
+
+      setStatus({ state: "success", message });
       setForm({ name: "", email: "", message: "" });
     } catch (err) {
       setStatus({ state: "error", message: err.message });

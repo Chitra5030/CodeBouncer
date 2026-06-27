@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import fs from "node:fs/promises";
+import { existsSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { lookupNpm } from "./src/registries/npm.js";
@@ -10,12 +11,18 @@ import { extractPackages } from "./src/parser.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = path.join(__dirname, "data");
+const CLIENT_DIST = path.join(__dirname, "..", "client", "dist");
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const PORT = process.env.PORT || 5001;
 const app = express();
 app.use(cors());
 app.use(express.json({ limit: "256kb" }));
+
+// Serve the built client (single-service deploy). Skipped in dev where Vite serves it.
+if (existsSync(CLIENT_DIST)) {
+  app.use(express.static(CLIENT_DIST));
+}
 
 // --- simple flat-file storage for waitlist + contact (swap for a DB later) ---
 async function appendJson(file, entry) {
@@ -141,6 +148,13 @@ app.post("/api/scan", async (req, res) => {
     results,
   });
 });
+
+// SPA fallback: any non-API GET serves the React app (single-service deploy).
+if (existsSync(CLIENT_DIST)) {
+  app.get(/^(?!\/api).*/, (_req, res) => {
+    res.sendFile(path.join(CLIENT_DIST, "index.html"));
+  });
+}
 
 app.listen(PORT, () => {
   console.log(`CodeBouncer API listening on http://localhost:${PORT}`);

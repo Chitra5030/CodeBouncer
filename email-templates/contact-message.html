@@ -1,0 +1,39 @@
+<!--
+  CodeBouncer — Contact message email (sent to your team inbox)
+  Paste the markup below into EmailJS: Email Templates > Create New Template > "Edit Content" > Code editor.
+  In the template settings set:
+    To Email      = your team inbox, e.g. founder@codebouncer.online
+    Reply To      = {{reply_to}}      (so you can reply straight to the sender)
+    Subject       = New CodeBouncer message from {{name}}
+  Available variables: {{name}}, {{email}}, {{reply_to}}, {{message}}
+-->
+<div style="margin:0;padding:0;background:#0b1020;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0b1020;padding:32px 16px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#121a30;border:1px solid #243056;border-radius:16px;overflow:hidden;">
+          <tr>
+            <td style="padding:28px 32px 8px;">
+              <div style="font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#7c9cff;font-weight:700;">CodeBouncer · Contact</div>
+              <h1 style="margin:12px 0 0;color:#ffffff;font-size:22px;">New message from {{name}}</h1>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:16px 32px 28px;color:#cdd6ee;font-size:15px;line-height:1.6;">
+              <p style="margin:0 0 6px;color:#8b96b5;font-size:13px;">From</p>
+              <p style="margin:0 0 16px;color:#fff;">{{name}} &lt;{{email}}&gt;</p>
+
+              <p style="margin:0 0 6px;color:#8b96b5;font-size:13px;">Message</p>
+              <div style="background:#0f1730;border:1px solid #243056;border-radius:12px;padding:16px 18px;color:#cdd6ee;white-space:pre-wrap;">{{message}}</div>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:16px 32px;background:#0d1428;border-top:1px solid #243056;text-align:center;">
+              <p style="margin:0;font-size:12px;color:#717ea3;">Reply to this email to respond directly to {{name}}.</p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</div>

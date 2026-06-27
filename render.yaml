@@ -1,0 +1,22 @@
+# Render blueprint — single-service deploy (Express serves the API + built React app).
+# Deploy: push to GitHub, then on https://render.com choose "New > Blueprint" and pick this repo.
+services:
+  - type: web
+    name: codebouncer
+    runtime: node
+    plan: free
+    buildCommand: npm run deploy:build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      # EmailJS keys are baked into the client at BUILD time, so set them here.
+      - key: VITE_EMAILJS_PUBLIC_KEY
+        sync: false
+      - key: VITE_EMAILJS_SERVICE_ID
+        sync: false
+      - key: VITE_EMAILJS_WAITLIST_TEMPLATE_ID
+        sync: false
+      - key: VITE_EMAILJS_CONTACT_TEMPLATE_ID
+        sync: false
