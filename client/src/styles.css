@@ -692,3 +692,30 @@ html {
 .legal__body::-webkit-scrollbar-thumb,
 .scanner__input::-webkit-scrollbar-thumb { border-color: var(--surface); }
 .legal__body, .scanner__input { scrollbar-color: var(--green) transparent; scrollbar-width: thin; }
+
+/* Accessibility: visible keyboard focus for all interactive elements.
+   Uses :focus-visible so it only shows for keyboard users, not mouse clicks. */
+:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Accessibility: respect users who prefer reduced motion.
+   Keeps end states (so revealed content stays visible) but removes animation. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
