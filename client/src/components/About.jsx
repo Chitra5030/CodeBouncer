@@ -4,7 +4,6 @@ const FOUNDER = {
   title: "Founder & CEO",
   initials: "CK",
   blurb: "Software engineer turned founder, building the security layer for AI-assisted development.",
-  linkedin: "#",
 };
 
 const tags = ["AI-First Security", "Developer Tool · B2B SaaS", "Launching 2026"];
@@ -50,9 +49,6 @@ export default function About() {
             </span>
             <p>{FOUNDER.blurb}</p>
           </div>
-          <a className="byline__link" href={FOUNDER.linkedin} target="_blank" rel="noreferrer">
-            LinkedIn ↗
-          </a>
         </div>
       </div>
     </section>
